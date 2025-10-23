@@ -3,7 +3,7 @@ builder = "NIXPACKS"
 buildCommand = "pnpm run build"
 
 [deploy]
-startCommand = "npm run start"
+startCommand = "pnpm dev"
 # healthcheckPath = "/"
 healthcheckTimeout = 100
 restartPolicyType = "ON_FAILURE"
