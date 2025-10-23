@@ -379,10 +379,6 @@ console.log('invoiceData', invoiceData)
                 </button>
               </div>
             </div>
-          ) : !isInvoiceOpen ? (
-            <div className="text-center py-4">
-              <p className="text-gray-500 text-sm">Payment is no longer available for this invoice.</p>
-            </div>
           ) : null}
 
           <div className="mt-6 text-center">

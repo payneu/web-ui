@@ -67,8 +67,8 @@ const Homepage = () => {
             <div className="w-12 h-12 bg-secondary-100 rounded-lg flex items-center justify-center mb-4">
               <span className="text-2xl">🪙</span>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Token Management</h3>
-            <p className="text-gray-600">Add and configure supported tokens for your payment infrastructure.</p>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Token: AutoPay</h3>
+            <p className="text-gray-600">Auto-swap convertible tokens to pay merchants</p>
           </div>
 
           <div className="bg-white p-6 rounded-lg shadow border">
@@ -84,8 +84,8 @@ const Homepage = () => {
       <footer className="bg-white border-t border-gray-200 mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center text-gray-500">
-            <p>&copy; 2024 PayNeu. All rights reserved.</p>
-            <p className="mt-2 text-sm">Powered by blockchain technology</p>
+            <p>&copy; 2025 PayNeu. All rights reserved.</p>
+            <p className="mt-2 text-sm">Built by @sleepbuildrun</p>
           </div>
         </div>
       </footer>

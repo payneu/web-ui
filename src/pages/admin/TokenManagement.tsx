@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useCreateToken, CreateTokenDto } from '../../api/payneu-api';
 
+
 interface Token {
   id: string;
   address: string;
@@ -24,7 +25,7 @@ const TokenManagement = () => {
     {
       id: '2',
       address: '0x8ec7d893f57b6a7c837bc93cfb4c01b80f58ba6b',
-      symbol: 'BAZE',
+      symbol: 'BAZED',
       name: 'Baze Token',
       addedAt: '2024-01-14'
     }
@@ -52,17 +53,48 @@ const TokenManagement = () => {
     }
   };
 
+  const handleAddToWallet = async (token: Token) => {
+    try {
+      // Check if MetaMask is available
+      if (typeof (window as any).ethereum !== 'undefined') {
+        console.log('Adding token to wallet:', token);
+
+        const result = await (window as any).ethereum.request({
+          method: 'wallet_watchAsset',
+          params: {
+            type: 'ERC20',
+            options: {
+              address: token.address,
+              symbol: token.symbol,
+              decimals: 18, // Assuming 18 decimals for both tokens
+              image: '', // Optional token image URL
+            },
+          },
+        });
+
+        console.log('Add token result:', result);
+
+        if (result) {
+          alert(`${token.symbol} token has been added to your MetaMask wallet!`);
+        }
+      } else {
+        alert('MetaMask is not installed. Please install MetaMask to add tokens to your wallet.');
+      }
+    } catch (error) {
+      console.error('Failed to add token to wallet:', error);
+      if (error instanceof Error) {
+        console.log(error)
+        alert(`Failed to add token: ${error.message}`);
+      } else {
+        alert('Failed to add token to wallet. Please try again.');
+      }
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-900">Token Management</h1>
-        <button
-          onClick={() => setShowAddForm(true)}
-          disabled={isMutating}
-          className="bg-primary-600 hover:bg-primary-700 disabled:bg-gray-400 text-white px-4 py-2 rounded-md font-medium transition-colors"
-        >
-          {isMutating ? 'Adding...' : 'Add New Token'}
-        </button>
       </div>
 
       {showAddForm && (
@@ -129,7 +161,7 @@ const TokenManagement = () => {
                 Address
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Added
+                Action
               </th>
             </tr>
           </thead>
@@ -146,7 +178,12 @@ const TokenManagement = () => {
                   {token.address.slice(0, 10)}...{token.address.slice(-8)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {token.addedAt}
+                  <button
+                    onClick={() => handleAddToWallet(token)}
+                    className="bg-primary-600 hover:bg-primary-700 text-white px-3 py-1 rounded-md text-xs font-medium transition-colors"
+                  >
+                    Add to Wallet
+                  </button>
                 </td>
               </tr>
             ))}
