@@ -71,7 +71,7 @@ export const getAppControllerGetHelloUrl = () => {
 
   
 
-  return `http://localhost:3000/`
+  return `https://api-production-d10d.up.railway.app/`
 }
 
 export const appControllerGetHello = async ( options?: RequestInit): Promise<appControllerGetHelloResponse> => {
@@ -94,7 +94,7 @@ export const appControllerGetHello = async ( options?: RequestInit): Promise<app
 
 
 
-export const getAppControllerGetHelloKey = () => [`http://localhost:3000/`] as const;
+export const getAppControllerGetHelloKey = () => [`https://api-production-d10d.up.railway.app/`] as const;
 
 export type AppControllerGetHelloQueryResult = NonNullable<Awaited<ReturnType<typeof appControllerGetHello>>>
 export type AppControllerGetHelloQueryError = Promise<unknown>
@@ -107,6 +107,68 @@ export const useAppControllerGetHello = <TError = Promise<unknown>>(
   const isEnabled = swrOptions?.enabled !== false
   const swrKey = swrOptions?.swrKey ?? (() => isEnabled ? getAppControllerGetHelloKey() : null);
   const swrFn = () => appControllerGetHello(fetchOptions)
+
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(swrKey, swrFn, swrOptions)
+
+  return {
+    swrKey,
+    ...query
+  }
+}
+
+export type appControllerHealthCheckResponse200 = {
+  data: void
+  status: 200
+}
+    
+export type appControllerHealthCheckResponseSuccess = (appControllerHealthCheckResponse200) & {
+  headers: Headers;
+};
+;
+
+export type appControllerHealthCheckResponse = (appControllerHealthCheckResponseSuccess)
+
+export const getAppControllerHealthCheckUrl = () => {
+
+
+  
+
+  return `https://api-production-d10d.up.railway.app/health`
+}
+
+export const appControllerHealthCheck = async ( options?: RequestInit): Promise<appControllerHealthCheckResponse> => {
+  
+  const res = await fetch(getAppControllerHealthCheckUrl(),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: appControllerHealthCheckResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as appControllerHealthCheckResponse
+}
+
+
+
+
+export const getAppControllerHealthCheckKey = () => [`https://api-production-d10d.up.railway.app/health`] as const;
+
+export type AppControllerHealthCheckQueryResult = NonNullable<Awaited<ReturnType<typeof appControllerHealthCheck>>>
+export type AppControllerHealthCheckQueryError = Promise<unknown>
+
+export const useAppControllerHealthCheck = <TError = Promise<unknown>>(
+   options?: { swr?:SWRConfiguration<Awaited<ReturnType<typeof appControllerHealthCheck>>, TError> & { swrKey?: Key, enabled?: boolean }, fetch?: RequestInit }
+) => {
+  const {swr: swrOptions, fetch: fetchOptions} = options ?? {}
+
+  const isEnabled = swrOptions?.enabled !== false
+  const swrKey = swrOptions?.swrKey ?? (() => isEnabled ? getAppControllerHealthCheckKey() : null);
+  const swrFn = () => appControllerHealthCheck(fetchOptions)
 
   const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(swrKey, swrFn, swrOptions)
 
@@ -133,7 +195,7 @@ export const getCreateMerchantUrl = () => {
 
   
 
-  return `http://localhost:3000/merchant`
+  return `https://api-production-d10d.up.railway.app/merchant`
 }
 
 export const createMerchant = async (createMerchantDto: CreateMerchantDto, options?: RequestInit): Promise<createMerchantResponse> => {
@@ -162,7 +224,7 @@ export const getCreateMerchantMutationFetcher = ( options?: RequestInit) => {
     return createMerchant(arg, options);
   }
 }
-export const getCreateMerchantMutationKey = () => [`http://localhost:3000/merchant`] as const;
+export const getCreateMerchantMutationKey = () => [`https://api-production-d10d.up.railway.app/merchant`] as const;
 
 export type CreateMerchantMutationResult = NonNullable<Awaited<ReturnType<typeof createMerchant>>>
 export type CreateMerchantMutationError = Promise<unknown>
@@ -208,7 +270,7 @@ export const getCheckPayerStatusUrl = (params: CheckPayerStatusParams,) => {
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://localhost:3000/payment/status?${stringifiedParams}` : `http://localhost:3000/payment/status`
+  return stringifiedParams.length > 0 ? `https://api-production-d10d.up.railway.app/payment/status?${stringifiedParams}` : `https://api-production-d10d.up.railway.app/payment/status`
 }
 
 export const checkPayerStatus = async (params: CheckPayerStatusParams, options?: RequestInit): Promise<checkPayerStatusResponse> => {
@@ -231,7 +293,7 @@ export const checkPayerStatus = async (params: CheckPayerStatusParams, options?:
 
 
 
-export const getCheckPayerStatusKey = (params: CheckPayerStatusParams,) => [`http://localhost:3000/payment/status`, ...(params ? [params]: [])] as const;
+export const getCheckPayerStatusKey = (params: CheckPayerStatusParams,) => [`https://api-production-d10d.up.railway.app/payment/status`, ...(params ? [params]: [])] as const;
 
 export type CheckPayerStatusQueryResult = NonNullable<Awaited<ReturnType<typeof checkPayerStatus>>>
 export type CheckPayerStatusQueryError = Promise<unknown>
@@ -277,7 +339,7 @@ export const getSendInvoicePaymentUrl = (params: SendInvoicePaymentParams,) => {
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://localhost:3000/payment/invoice?${stringifiedParams}` : `http://localhost:3000/payment/invoice`
+  return stringifiedParams.length > 0 ? `https://api-production-d10d.up.railway.app/payment/invoice?${stringifiedParams}` : `https://api-production-d10d.up.railway.app/payment/invoice`
 }
 
 export const sendInvoicePayment = async (params: SendInvoicePaymentParams, options?: RequestInit): Promise<sendInvoicePaymentResponse> => {
@@ -305,7 +367,7 @@ export const getSendInvoicePaymentMutationFetcher = (params: SendInvoicePaymentP
     return sendInvoicePayment(params, options);
   }
 }
-export const getSendInvoicePaymentMutationKey = (params: SendInvoicePaymentParams,) => [`http://localhost:3000/payment/invoice`, ...(params ? [params]: [])] as const;
+export const getSendInvoicePaymentMutationKey = (params: SendInvoicePaymentParams,) => [`https://api-production-d10d.up.railway.app/payment/invoice`, ...(params ? [params]: [])] as const;
 
 export type SendInvoicePaymentMutationResult = NonNullable<Awaited<ReturnType<typeof sendInvoicePayment>>>
 export type SendInvoicePaymentMutationError = Promise<unknown>
@@ -351,7 +413,7 @@ export const getConvertThenSendStableUrl = (params: ConvertThenSendStableParams,
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://localhost:3000/payment/asset?${stringifiedParams}` : `http://localhost:3000/payment/asset`
+  return stringifiedParams.length > 0 ? `https://api-production-d10d.up.railway.app/payment/asset?${stringifiedParams}` : `https://api-production-d10d.up.railway.app/payment/asset`
 }
 
 export const convertThenSendStable = async (params: ConvertThenSendStableParams, options?: RequestInit): Promise<convertThenSendStableResponse> => {
@@ -379,7 +441,7 @@ export const getConvertThenSendStableMutationFetcher = (params: ConvertThenSendS
     return convertThenSendStable(params, options);
   }
 }
-export const getConvertThenSendStableMutationKey = (params: ConvertThenSendStableParams,) => [`http://localhost:3000/payment/asset`, ...(params ? [params]: [])] as const;
+export const getConvertThenSendStableMutationKey = (params: ConvertThenSendStableParams,) => [`https://api-production-d10d.up.railway.app/payment/asset`, ...(params ? [params]: [])] as const;
 
 export type ConvertThenSendStableMutationResult = NonNullable<Awaited<ReturnType<typeof convertThenSendStable>>>
 export type ConvertThenSendStableMutationError = Promise<unknown>
@@ -418,7 +480,7 @@ export const getCreateInvoiceUrl = () => {
 
   
 
-  return `http://localhost:3000/invoice`
+  return `https://api-production-d10d.up.railway.app/invoice`
 }
 
 export const createInvoice = async (createInvoiceDto: CreateInvoiceDto, options?: RequestInit): Promise<createInvoiceResponse> => {
@@ -447,7 +509,7 @@ export const getCreateInvoiceMutationFetcher = ( options?: RequestInit) => {
     return createInvoice(arg, options);
   }
 }
-export const getCreateInvoiceMutationKey = () => [`http://localhost:3000/invoice`] as const;
+export const getCreateInvoiceMutationKey = () => [`https://api-production-d10d.up.railway.app/invoice`] as const;
 
 export type CreateInvoiceMutationResult = NonNullable<Awaited<ReturnType<typeof createInvoice>>>
 export type CreateInvoiceMutationError = Promise<unknown>
@@ -486,7 +548,7 @@ export const getFindAllInvoiceUrl = () => {
 
   
 
-  return `http://localhost:3000/invoice`
+  return `https://api-production-d10d.up.railway.app/invoice`
 }
 
 export const findAllInvoice = async ( options?: RequestInit): Promise<findAllInvoiceResponse> => {
@@ -509,7 +571,7 @@ export const findAllInvoice = async ( options?: RequestInit): Promise<findAllInv
 
 
 
-export const getFindAllInvoiceKey = () => [`http://localhost:3000/invoice`] as const;
+export const getFindAllInvoiceKey = () => [`https://api-production-d10d.up.railway.app/invoice`] as const;
 
 export type FindAllInvoiceQueryResult = NonNullable<Awaited<ReturnType<typeof findAllInvoice>>>
 export type FindAllInvoiceQueryError = Promise<unknown>
@@ -548,7 +610,7 @@ export const getFindInvoiceByIdUrl = (id: string,) => {
 
   
 
-  return `http://localhost:3000/invoice/${id}`
+  return `https://api-production-d10d.up.railway.app/invoice/${id}`
 }
 
 export const findInvoiceById = async (id: string, options?: RequestInit): Promise<findInvoiceByIdResponse> => {
@@ -571,7 +633,7 @@ export const findInvoiceById = async (id: string, options?: RequestInit): Promis
 
 
 
-export const getFindInvoiceByIdKey = (id: string,) => [`http://localhost:3000/invoice/${id}`] as const;
+export const getFindInvoiceByIdKey = (id: string,) => [`https://api-production-d10d.up.railway.app/invoice/${id}`] as const;
 
 export type FindInvoiceByIdQueryResult = NonNullable<Awaited<ReturnType<typeof findInvoiceById>>>
 export type FindInvoiceByIdQueryError = Promise<unknown>
@@ -610,7 +672,7 @@ export const getCreateTokenUrl = () => {
 
   
 
-  return `http://localhost:3000/token`
+  return `https://api-production-d10d.up.railway.app/token`
 }
 
 export const createToken = async (createTokenDto: CreateTokenDto, options?: RequestInit): Promise<createTokenResponse> => {
@@ -639,7 +701,7 @@ export const getCreateTokenMutationFetcher = ( options?: RequestInit) => {
     return createToken(arg, options);
   }
 }
-export const getCreateTokenMutationKey = () => [`http://localhost:3000/token`] as const;
+export const getCreateTokenMutationKey = () => [`https://api-production-d10d.up.railway.app/token`] as const;
 
 export type CreateTokenMutationResult = NonNullable<Awaited<ReturnType<typeof createToken>>>
 export type CreateTokenMutationError = Promise<unknown>
@@ -685,7 +747,7 @@ export const getMintTokenUrl = (params: MintTokenParams,) => {
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://localhost:3000/token/faucet?${stringifiedParams}` : `http://localhost:3000/token/faucet`
+  return stringifiedParams.length > 0 ? `https://api-production-d10d.up.railway.app/token/faucet?${stringifiedParams}` : `https://api-production-d10d.up.railway.app/token/faucet`
 }
 
 export const mintToken = async (params: MintTokenParams, options?: RequestInit): Promise<mintTokenResponse> => {
@@ -713,7 +775,7 @@ export const getMintTokenMutationFetcher = (params: MintTokenParams, options?: R
     return mintToken(params, options);
   }
 }
-export const getMintTokenMutationKey = (params: MintTokenParams,) => [`http://localhost:3000/token/faucet`, ...(params ? [params]: [])] as const;
+export const getMintTokenMutationKey = (params: MintTokenParams,) => [`https://api-production-d10d.up.railway.app/token/faucet`, ...(params ? [params]: [])] as const;
 
 export type MintTokenMutationResult = NonNullable<Awaited<ReturnType<typeof mintToken>>>
 export type MintTokenMutationError = Promise<unknown>
