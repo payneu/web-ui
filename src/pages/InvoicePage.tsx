@@ -29,7 +29,7 @@ const InvoicePage = () => {
   const { data: invoiceData, error: invoiceError, isLoading: invoiceLoading } = useFindInvoiceById(id || '1');
 
   // Check payment status if wallet is connected
-  const { data: paymentStatus, error: paymentError } = useCheckPayerStatus(
+  const { data: paymentStatus } = useCheckPayerStatus(
     {
       address: address || '',
       invoiceId: parseInt(id || '1')
