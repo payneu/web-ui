@@ -33,7 +33,7 @@ const Faucet = () => {
       };
 
       // Call the API directly since the generated hook structure is complex
-      const response = await fetch(`http://localhost:3000/token/faucet?to=${encodeURIComponent(mintParams.to)}&amount=${mintParams.amount}&tokenAddress=${encodeURIComponent(mintParams.tokenAddress)}`, {
+      const response = await fetch(`https://api-production-d10d.up.railway.app/token/faucet?to=${encodeURIComponent(mintParams.to)}&amount=${mintParams.amount}&tokenAddress=${encodeURIComponent(mintParams.tokenAddress)}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -57,18 +57,18 @@ const Faucet = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Token Faucet</h1>
-        <p className="mt-2 text-gray-600">Mint tokens for testing purposes</p>
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Token Faucet</h1>
+        <p className="mt-2 text-sm sm:text-base text-gray-600">Mint tokens for testing purposes</p>
       </div>
 
       {/* Success Message */}
       {successMessage && (
-        <div className="bg-green-50 border border-green-200 rounded-md p-4">
+        <div className="bg-green-50 border border-green-200 rounded-md p-3 sm:p-4">
           <div className="flex">
             <div className="ml-3">
               <h3 className="text-sm font-medium text-green-800">Success!</h3>
               <div className="mt-2 text-sm text-green-700">
-                <p>{successMessage}</p>
+                <p className="break-words">{successMessage}</p>
               </div>
             </div>
           </div>
@@ -77,20 +77,20 @@ const Faucet = () => {
 
       {/* Error Message */}
       {mintError && (
-        <div className="bg-red-50 border border-red-200 rounded-md p-4">
+        <div className="bg-red-50 border border-red-200 rounded-md p-3 sm:p-4">
           <div className="flex">
             <div className="ml-3">
               <h3 className="text-sm font-medium text-red-800">Error</h3>
               <div className="mt-2 text-sm text-red-700">
-                <p>{mintError}</p>
+                <p className="break-words">{mintError}</p>
               </div>
             </div>
           </div>
         </div>
       )}
 
-      <div className="bg-white p-6 rounded-lg shadow border">
-        <h3 className="text-lg font-semibold mb-4">Mint Tokens</h3>
+      <div className="bg-white p-4 sm:p-6 rounded-lg shadow border max-w-2xl">
+        <h3 className="text-base sm:text-lg font-semibold mb-4">Mint Tokens</h3>
         <form onSubmit={handleMint} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -100,7 +100,7 @@ const Faucet = () => {
               type="text"
               value={mintForm.to}
               onChange={(e) => setMintForm({ ...mintForm, to: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
               placeholder="0x..."
               required
             />
@@ -114,7 +114,7 @@ const Faucet = () => {
               step="0.01"
               value={mintForm.amount}
               onChange={(e) => setMintForm({ ...mintForm, amount: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
               required
             />
           </div>
@@ -125,7 +125,7 @@ const Faucet = () => {
             <select
               value={mintForm.tokenAddress}
               onChange={(e) => setMintForm({ ...mintForm, tokenAddress: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
             >
               {availableTokens.map((token) => (
                 <option key={token.address} value={token.address}>
@@ -137,9 +137,9 @@ const Faucet = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full py-2 px-4 rounded-md font-medium transition-colors ${
+            className={`w-full py-3 px-4 rounded-md font-medium transition-colors text-sm sm:text-base ${
               isSubmitting
-                ? 'bg-gray-400 cursor-not-allowed'
+                ? 'bg-gray-400 cursor-not-allowed text-white'
                 : 'bg-secondary-500 hover:bg-secondary-600 text-white'
             }`}
           >

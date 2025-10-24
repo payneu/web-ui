@@ -61,7 +61,7 @@ const InvoicePage = () => {
       case 1: return 'mUSD';
       case 2: return 'BAZE';
       case 3: return 'NEU';
-      default: return 'Unknown';
+      default: return 'USD';
     }
   };
 
@@ -204,14 +204,14 @@ console.log('invoiceData', invoiceData)
   // Show loading state
   if (invoiceLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-primary-50 to-secondary-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 flex items-center justify-center p-4">
         <div className="max-w-md w-full text-center">
-          <div className="w-20 h-20 bg-primary-600 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-2xl font-bold text-white">PN</span>
+          <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-primary-600 to-primary-700 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-primary-500/30">
+            <span className="text-2xl sm:text-3xl font-bold text-white">PN</span>
           </div>
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 mb-4"></div>
-            <p className="text-gray-600">Loading invoice...</p>
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+            <div className="inline-block animate-spin rounded-full h-10 w-10 border-3 border-primary-600 border-t-transparent mb-4"></div>
+            <p className="text-gray-600 font-medium">Loading invoice...</p>
           </div>
         </div>
       </div>
@@ -221,18 +221,18 @@ console.log('invoiceData', invoiceData)
   // Show error state
   if (invoiceError) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-primary-50 to-secondary-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 flex items-center justify-center p-4">
         <div className="max-w-md w-full text-center">
-          <div className="w-20 h-20 bg-primary-600 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-2xl font-bold text-white">PN</span>
+          <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-primary-600 to-primary-700 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-primary-500/30">
+            <span className="text-2xl sm:text-3xl font-bold text-white">PN</span>
           </div>
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <div className="text-red-600 mb-4">⚠️</div>
-            <h2 className="text-lg font-semibold text-gray-900 mb-2">Invoice Not Found</h2>
-            <p className="text-gray-600 mb-4">The requested invoice could not be loaded.</p>
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+            <div className="text-4xl mb-4">⚠️</div>
+            <h2 className="text-xl font-bold text-gray-900 mb-2">Invoice Not Found</h2>
+            <p className="text-gray-600 mb-6">The requested invoice could not be loaded.</p>
             <button
               onClick={() => window.location.reload()}
-              className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md font-medium transition-colors"
+              className="bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 shadow-lg shadow-primary-500/30 hover:shadow-xl hover:shadow-primary-500/40"
             >
               Try Again
             </button>
@@ -243,32 +243,53 @@ console.log('invoiceData', invoiceData)
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-secondary-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 flex items-center justify-center p-3 sm:p-4">
       <div className="max-w-md w-full">
-        <div className="text-center mb-8">
-          <div className="w-20 h-20 bg-primary-600 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-2xl font-bold text-white">PN</span>
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-primary-600 to-primary-700 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-primary-500/30 transform hover:scale-105 transition-transform duration-300">
+            <span className="text-2xl sm:text-3xl font-bold text-white">PN</span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">PayNeu</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent mb-2">PayNeu</h1>
+          {/* <p className="text-sm text-gray-500">Secure Blockchain Payments</p> */}
         </div>
 
-        <div className={`bg-white rounded-lg shadow-lg p-6 border border-gray-200 ${!isInvoiceOpen ? 'opacity-60' : ''}`}>
+        <div className={`bg-white rounded-xl shadow-lg p-4 sm:p-6 border border-gray-100 ${!isInvoiceOpen ? 'opacity-60' : ''} relative`}>
+          {isConnected && isInvoiceOpen && (
+            <div className="absolute top-4 right-4">
+              <div className="relative group">
+                <div className="w-8 h-8 rounded-lg bg-green-500 flex items-center justify-center shadow-md hover:shadow-lg transition-shadow">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <div className="absolute right-0 top-10 hidden group-hover:block bg-gray-900 text-white text-xs px-3 py-1.5 rounded-lg whitespace-nowrap z-10 shadow-xl">
+                  {address?.slice(0, 10)}...{address?.slice(-8)}
+                  <div className="absolute top-0 right-2 transform -translate-y-1 w-2 h-2 bg-gray-900 rotate-45"></div>
+                </div>
+              </div>
+            </div>
+          )}
           <div className="text-center mb-6">
-            <h2 className={`text-xl font-semibold mb-2 ${isInvoiceOpen ? 'text-gray-900' : 'text-gray-500'}`}>
+            <h2 className={`text-xl sm:text-2xl font-bold mb-3 ${isInvoiceOpen ? 'text-gray-900' : 'text-gray-500'}`}>
               Payment Request
             </h2>
-            <p className={isInvoiceOpen ? 'text-gray-600' : 'text-gray-400'}>
-              {invoice.company} is requesting payment of{' '}
-              <span className={`font-semibold ${isInvoiceOpen ? 'text-primary-600' : 'text-gray-400'}`}>
-                {invoice.amount} {invoice.token}
-              </span>
-            </p>
-            <div className={`mt-4 p-3 rounded-md ${isInvoiceOpen ? 'bg-gray-50' : 'bg-gray-100'}`}>
+            <div className={`inline-block px-4 py-2 rounded-lg mb-4 ${isInvoiceOpen ? 'bg-primary-50 border border-primary-200' : 'bg-gray-100'}`}>
+              <p className={`text-sm ${isInvoiceOpen ? 'text-gray-600' : 'text-gray-400'}`}>
+                {invoice.company}
+              </p>
+            </div>
+            <div className="mb-4">
+              <p className="text-sm text-gray-500 mb-1">Amount Due</p>
+              <p className={`text-3xl sm:text-4xl font-bold ${isInvoiceOpen ? 'text-primary-600' : 'text-gray-400'}`}>
+                {invoice.amount} <span className="text-xl sm:text-2xl">{invoice.token}</span>
+              </p>
+            </div>
+            <div className={`p-4 rounded-xl ${isInvoiceOpen ? 'bg-gradient-to-br from-gray-50 to-gray-100' : 'bg-gray-100'}`}>
               <p className={`text-sm ${isInvoiceOpen ? 'text-gray-700' : 'text-gray-400'}`}>{invoice.description}</p>
             </div>
             {!isInvoiceOpen && (
-              <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md">
-                <p className="text-sm text-red-700">
+              <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-sm text-red-700 font-medium">
                   This invoice is no longer available for payment.
                 </p>
               </div>
@@ -279,80 +300,64 @@ console.log('invoiceData', invoiceData)
             <div className="space-y-3">
               <button
                 onClick={handleConnectWallet}
-                className="w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 px-4 rounded-md transition-colors"
+                className="w-full bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 shadow-lg shadow-primary-500/30 hover:shadow-xl hover:shadow-primary-500/40 transform hover:-translate-y-0.5"
               >
                 Connect Wallet
               </button>
             </div>
           ) : isInvoiceOpen && isConnected ? (
             <div className="space-y-4">
-              <div className="p-3 bg-green-50 border border-green-200 rounded-md">
-                <p className="text-sm text-green-700">
-                  ✅ Wallet Connected
-                </p>
-                <p className="text-xs text-green-600 font-mono mt-1">
-                  {address?.slice(0, 10)}...{address?.slice(-8)}
-                </p>
-                {paymentError && (
-                  <p className="text-xs text-red-600 mt-1">
-                    Unable to check payment status
-                  </p>
-                )}
-                {paymentStatus?.data ? (
-                  <p className="text-xs text-blue-600 mt-1">
-                    Payment status checked
-                  </p>
-                ) : null}
-              </div>
-
               {/* Payment Error Display */}
               {(stablePaymentError || assetPaymentError) && (
-                <div className="bg-red-50 border border-red-200 rounded-md p-3">
-                  <p className="text-sm text-red-700">
-                    ❌ Payment failed. Please try again.
-                  </p>
+                <div className="bg-red-50 border border-red-200 rounded-xl p-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-red-500">❌</span>
+                    <p className="text-sm text-red-700 font-medium">
+                      Payment failed. Please try again.
+                    </p>
+                  </div>
                 </div>
               )}
 
-              <div className="bg-gray-50 p-4 rounded-md">
-                <h3 className="font-medium text-gray-900 mb-2">Payment Details</h3>
-                <div className="space-y-1 text-sm">
-                  <div className="flex justify-between">
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-4 rounded-xl border border-gray-200">
+                <h3 className="font-semibold text-gray-900 mb-3 text-sm">Payment Summary</h3>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between items-center">
                     <span className="text-gray-600">Amount:</span>
-                    <span className="font-medium">{invoice.amount} {invoice.token}</span>
+                    <span className="font-bold text-gray-900">{invoice.amount} {invoice.token}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">To:</span>
-                    <span className="font-medium">{invoice.company}</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Merchant:</span>
+                    <span className="font-semibold text-gray-900 truncate ml-2">{invoice.company}</span>
                   </div>
                 </div>
               </div>
 
               <div className="space-y-3">
                 {isPaymentUnavailable ? (
-                  <div className="bg-red-50 border border-red-200 rounded-md p-4">
+                  <div className="bg-red-50 border border-red-200 rounded-xl p-4">
                     <div className="text-center">
-                      <div className="text-red-600 mb-2">❌</div>
-                      <h3 className="text-sm font-medium text-red-800 mb-2">Payment Not Available</h3>
-                      <p className="text-sm text-red-700">
+                      <div className="text-3xl mb-2">❌</div>
+                      <h3 className="text-sm font-bold text-red-800 mb-2">Payment Not Available</h3>
+                      <p className="text-xs text-red-700">
                         You don't have sufficient balance in {invoice.token} or BAZE tokens to complete this payment.
                       </p>
                     </div>
                   </div>
                 ) : shouldShowBazeOption ? (
                   <>
-                    <div className="bg-orange-50 border border-orange-200 rounded-md p-3 mb-3">
-                      <p className="text-sm text-orange-700">
+                    <div className="bg-orange-50 border border-orange-200 rounded-lg p-2.5">
+                      <p className="text-xs text-orange-700">
                         ⚠️ Payment with {invoice.token} is not possible. You can pay with BAZE instead. 1 mUSD = 10 BAZE
                       </p>
                     </div>
                     <button
                       onClick={handlePayWithBaze}
                       disabled={isAssetPaymentLoading || isApprovePending || isApproveConfirming || (pendingPaymentType === 'asset')}
-                      className={`w-full font-medium py-3 px-4 rounded-md transition-colors ${
+                      className={`w-full font-semibold py-3.5 px-4 rounded-xl transition-all duration-200 text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 ${
                         (isAssetPaymentLoading || isApprovePending || isApproveConfirming || (pendingPaymentType === 'asset'))
-                          ? 'bg-gray-400 cursor-not-allowed'
-                          : 'bg-secondary-500 hover:bg-secondary-600 text-white'
+                          ? 'bg-gray-300 cursor-not-allowed text-gray-500'
+                          : 'bg-gradient-to-r from-secondary-500 to-secondary-600 hover:from-secondary-600 hover:to-secondary-700 text-white shadow-secondary-500/30'
                       }`}
                     >
                       {getButtonText('BAZE', isAssetPaymentLoading, pendingPaymentType === 'asset')}
@@ -362,10 +367,10 @@ console.log('invoiceData', invoiceData)
                   <button
                     onClick={handlePayInvoice}
                     disabled={isStablePaymentLoading || isApprovePending || isApproveConfirming || (pendingPaymentType === 'stable')}
-                    className={`w-full font-medium py-3 px-4 rounded-md transition-colors ${
+                    className={`w-full font-semibold py-3.5 px-4 rounded-xl transition-all duration-200 text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 ${
                       (isStablePaymentLoading || isApprovePending || isApproveConfirming || (pendingPaymentType === 'stable'))
-                        ? 'bg-gray-400 cursor-not-allowed'
-                        : 'bg-secondary-500 hover:bg-secondary-600 text-white'
+                        ? 'bg-gray-300 cursor-not-allowed text-gray-500'
+                        : 'bg-gradient-to-r from-secondary-500 to-secondary-600 hover:from-secondary-600 hover:to-secondary-700 text-white shadow-secondary-500/30'
                     }`}
                   >
                     {getButtonText(invoice.token, isStablePaymentLoading, pendingPaymentType === 'stable')}
@@ -373,7 +378,7 @@ console.log('invoiceData', invoiceData)
                 )}
                 <button
                   onClick={() => disconnect()}
-                  className="w-full bg-gray-300 hover:bg-gray-400 text-gray-700 font-medium py-2 px-4 rounded-md transition-colors"
+                  className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2.5 px-4 rounded-xl transition-all duration-200 text-sm sm:text-base"
                 >
                   Disconnect Wallet
                 </button>
@@ -381,9 +386,9 @@ console.log('invoiceData', invoiceData)
             </div>
           ) : null}
 
-          <div className="mt-6 text-center">
+          <div className="mt-6 pt-4 border-t border-gray-100 text-center">
             <p className="text-xs text-gray-500">
-              Powered by PayNeu • Secure payments on blockchain
+              🔒 Powered by PayNeu • Secure blockchain payments
             </p>
           </div>
         </div>
